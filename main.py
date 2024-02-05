@@ -5,8 +5,8 @@ import sys
 import os
 import shutil
 
-# wb = openpyxl.load_workbook('部員名簿-モダンアート部.xlsx', data_only=True)
-# ws = wb["Sheet1"]
+# 団体のdict
+groups = {}
 
 # 代表者
 representative = []
@@ -20,6 +20,12 @@ deputy_representative = []
 deputy_accountant = []
 
 
+def load_group_data(file_name):
+    wb = openpyxl.load_workbook(filename=file_name, data_only=True)
+    ws = wb["Sheet1"]
+    for row in ws.rows:
+        groups[row[0].value] = row[1].value+row[3].value
+
 def read_role(file_name):
     wb = openpyxl.load_workbook(filename=file_name, data_only=True)
     ws = wb["Sheet1"]
@@ -30,6 +36,10 @@ def read_role(file_name):
                 row[4].value == "副部長・副主将" or
                 row[4].value == "副会計長"
         ):
+            group_name = groups.get(ws["A1"].value)
+            if group_name is None:
+                group_name = ws["D1"].value
+
             tel_num = row[5].value
 
             print(file_name)
@@ -44,8 +54,9 @@ def read_role(file_name):
                 "",
                 str(row[3].value).upper(),
                 tel_num,
-                ws["D1"].value
+                group_name
             ]
+
             print(row[4].value)
             if row[4].value == "部長・主将":
                 representative.append(row_data)
@@ -85,6 +96,8 @@ def create_output_file():
 
     wb.save('output_file.xlsx')
 
+
+load_group_data("./group_list.xlsx")
 
 dir_path = "member_list"
 
