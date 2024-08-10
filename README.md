@@ -15,6 +15,12 @@
 
 `group_list.xlsx`は、共有フォルダにあります。詳しい場所は聞いてください。または作成してください。
 
+## サンプルファイル
+`sample_file`にサンプルファイルをいれてあります。
+- group_list.xlsx  
+- 部員名簿-テンプレート.xlsx  
+    令和6年2月の様式に対応しています。  
+
 ## 製作者
 Sou Tamura([tmsou0209](https://github.com/tmsou0209))
 
